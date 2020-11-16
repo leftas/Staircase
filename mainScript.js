@@ -109,7 +109,6 @@ $(function () {
 
   scene.add(spotLight);
   scene.add(ambientLight);
-  scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
 
   // add the output of the renderer to the html element
   $("#WebGL-output").append(webGLRenderer.domElement);
