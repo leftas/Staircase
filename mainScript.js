@@ -145,7 +145,12 @@ $(function () {
       var tubesPoints = [];
       var supportPoints = [];
       for (var i = 1; i <= options.stairsCount; i++) {
-        shapePos = new THREE.Vector3(-9, yOffset * i, startingZStairOffset);
+        shapePos = new THREE.Vector3(
+          -9 + Math.sin((((options.degree * Math.PI) / 180) * i) / 20) * 20,
+          yOffset * i,
+          startingZStairOffset +
+            Math.cos((((options.degree * Math.PI) / 180) * i) / 20) * 20
+        );
         rotationZ = i * (Math.PI * options.relativePosition);
         //var angleStep = (i * (Math.PI * 2)) / 11;
         if (i % 2) {
@@ -223,7 +228,7 @@ $(function () {
   var gui = new dat.GUI();
   gui.add(controls, "stairsCount", 0, 30).onChange(controls.asGeom);
   gui.add(controls, "relativePosition", 0, 0.25).onChange(controls.asGeom);
-  gui.add(controls, "degree", -60, 60).onChange(controls.asGeom);
+  gui.add(controls, "degree", -360, 360).onChange(controls.asGeom);
 
   controls.asGeom();
   var camControls = new THREE.TrackballControls(
