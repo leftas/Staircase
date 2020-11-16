@@ -18,10 +18,9 @@ $(function () {
   webGLRenderer.setClearColor(new THREE.Color(0xeeeeee, 1.0));
   webGLRenderer.setSize(window.innerWidth, window.innerHeight);
   webGLRenderer.shadowMap.enabled = true;
-  webGLRenderer.shadowMapEnabled = true;
   webGLRenderer.shadowMapSoft = true;
-  webGLRenderer.shadowMap.renderReverseSided = false;
-  webGLRenderer.shadowMap.renderSingleSided = false;
+  // webGLRenderer.shadowMap.renderReverseSided = false;
+  // webGLRenderer.shadowMap.renderSingleSided = false;
 
   // axes helper
   //var axes = new THREE.AxesHelper(300);
@@ -86,11 +85,12 @@ $(function () {
   spotLight.castShadow = true;
   spotLight.receiveShadow = true;
   spotLight.shadowCameraVisible = true;
+
   spotLight.intensity = 3;
-  spotLight.distance = 300;
-  spotLight.angle = Math.PI;
-  spotLight.shadowCameraNear = 20;
-  spotLight.shadowCameraFov = 30;
+  spotLight.distance = 200;
+  //spotLight.angle = Math.PI / 6;
+  spotLight.shadow.camera.near = 20;
+  spotLight.shadow.camera.fov = 30;
   // spotLight.penumbra = 0.8;
   // spotLight.decay = 1;
   // spotLight.shadowMapWidth = 512;
@@ -109,6 +109,7 @@ $(function () {
 
   scene.add(spotLight);
   scene.add(ambientLight);
+  scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
 
   // add the output of the renderer to the html element
   $("#WebGL-output").append(webGLRenderer.domElement);
@@ -145,11 +146,7 @@ $(function () {
       var tubesPoints = [];
       var supportPoints = [];
       for (var i = 1; i <= options.stairsCount; i++) {
-        shapePos = new THREE.Vector3(
-          -9,
-          yOffset * i,
-          startingZStairOffset + (options.degree / options.stairsCount) * i
-        );
+        shapePos = new THREE.Vector3(-9, yOffset * i, startingZStairOffset);
         rotationZ = i * (Math.PI * options.relativePosition);
         //var angleStep = (i * (Math.PI * 2)) / 11;
         if (i % 2) {
